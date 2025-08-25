@@ -1,41 +1,31 @@
-<!-- index.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Script Uploader</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="container">
-    <!-- Password check section -->
-    <div id="password-section">
-      <label for="password-input">Enter password to upload:</label>
-      <input type="password" id="password-input" placeholder="Password">
-      <button id="check-password-btn">Check</button>
-    </div>
+import { useEffect, useRef } from "react"; import { motion } from "framer-motion"; import Particles from "react-tsparticles"; import { loadFull } from "tsparticles";
 
-    <!-- Upload form (hidden initially) -->
-    <div id="upload-form" style="display: none;">
-      <h2>Upload a Script</h2>
-      <label for="script-name">Script Name:</label>
-      <input type="text" id="script-name" placeholder="Script Name">
-      
-      <label for="script-code">Script:</label>
-      <textarea id="script-code" rows="5" placeholder="Enter the script code here"></textarea>
-      
-      <label for="script-desc">Description:</label>
-      <input type="text" id="script-desc" placeholder="Description">
-      
-      <button id="upload-btn">Upload</button>
-    </div>
+export default function ComingSoon() { const particlesInit = async (engine) => { await loadFull(engine); };
 
-    <!-- Uploaded scripts list -->
-    <div id="scripts-list">
-      <h2>Uploaded Scripts</h2>
-      <!-- Script cards will be appended here -->
-    </div>
-  </div>
-  <script src="script.js"></script>
-</body>
-</html>
+return ( <div className="relative w-screen h-screen bg-black flex items-center justify-center overflow-hidden"> {/* Particles */} <Particles id="tsparticles" init={particlesInit} options={{ background: { color: "#000" }, particles: { number: { value: 80 }, color: { value: ["#ff0000", "#ff9900", "#ff00ff", "#00ffff"] }, shape: { type: "circle" }, opacity: { value: 0.6 }, size: { value: { min: 1, max: 4 } }, move: { enable: true, speed: 1 }, links: { enable: true, color: "#ff0000", distance: 150 } }, }} />
+
+{/* Content */}
+  <motion.div
+    initial={{ y: 100, opacity: 0 }}
+    animate={{ y: 0, opacity: 1 }}
+    transition={{ duration: 1 }}
+    className="text-center z-10"
+  >
+    <h1 className="text-5xl font-bold bg-gradient-to-r from-red-500 via-yellow-500 to-pink-500 bg-clip-text text-transparent animate-pulse">
+      Coming Soon!
+    </h1>
+    <p className="mt-4 text-lg text-red-400">
+      We are fixing some issues, please wait for a while!
+    </p>
+
+    <a
+      href="https://official-amber.vercel.app/"
+      className="mt-6 inline-block px-6 py-3 rounded-2xl bg-red-600 text-white font-semibold shadow-lg hover:bg-red-700 transition"
+    >
+      Return
+    </a>
+  </motion.div>
+</div>
+
+); }
+
