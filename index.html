@@ -1,1 +1,41 @@
-# Scripts
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Script Uploader</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Password check section -->
+    <div id="password-section">
+      <label for="password-input">Enter password to upload:</label>
+      <input type="password" id="password-input" placeholder="Password">
+      <button id="check-password-btn">Check</button>
+    </div>
+
+    <!-- Upload form (hidden initially) -->
+    <div id="upload-form" style="display: none;">
+      <h2>Upload a Script</h2>
+      <label for="script-name">Script Name:</label>
+      <input type="text" id="script-name" placeholder="Script Name">
+      
+      <label for="script-code">Script:</label>
+      <textarea id="script-code" rows="5" placeholder="Enter the script code here"></textarea>
+      
+      <label for="script-desc">Description:</label>
+      <input type="text" id="script-desc" placeholder="Description">
+      
+      <button id="upload-btn">Upload</button>
+    </div>
+
+    <!-- Uploaded scripts list -->
+    <div id="scripts-list">
+      <h2>Uploaded Scripts</h2>
+      <!-- Script cards will be appended here -->
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
