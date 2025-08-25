@@ -1,1 +1,84 @@
+/* styles.css */
+body {
+  background-color: #1a1a1a;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
 
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+h2 {
+  color: #fff;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #000;
+}
+
+/* Red placeholder text for inputs */
+input::placeholder, textarea::placeholder {
+  color: red;
+  opacity: 1; /* ensure full opacity on most browsers */
+}
+
+/* Style for buttons */
+button {
+  margin-top: 10px;
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #cc0000;
+}
+
+/* Script card styles */
+.script-card {
+  background-color: #333;
+  border: 1px solid #444;
+  padding: 10px;
+  margin-top: 15px;
+  position: relative;
+}
+
+.script-card img {
+  width: 50px;
+  height: 50px;
+  float: left;
+  margin-right: 10px;
+}
+
+.script-card h3 {
+  margin: 0;
+  color: #fff;
+}
+
+.script-card p {
+  color: #ddd;
+}
+
+/* Clearfix for script card */
+.script-card::after {
+  content: "";
+  display: table;
+  clear: both;
+}
