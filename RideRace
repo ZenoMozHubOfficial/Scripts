@@ -1,0 +1,142 @@
+-- Load Rayfield
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+-- Create Window
+local Window = Rayfield:CreateWindow({
+    Name = "ZenoMoz | HUB",
+    LoadingTitle = "SkyeMoz Official",
+    LoadingSubtitle = "Please Wait",
+    ConfigurationSaving = {
+        Enabled = true,
+        FolderName = nil,
+        FileName = "UltimateAutoGUIConfig"
+    },
+    KeySystem = false
+})
+
+-- ==================== SERVICES ====================
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local LocalPlayer = Players.LocalPlayer
+
+-- RemoteEvent References
+local RemoteTrophy = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Event"):WaitForChild("GameRun"):WaitForChild("[C-S]PlayerTryGetRaceReward")
+local RemoteTrain = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Event"):WaitForChild("GameRun"):WaitForChild("[C-S]PlayerTryTrain")
+local RemoteEgg = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Event"):WaitForChild("Luck"):WaitForChild("[C-S]PlayerTryOpenEgg")
+local RemoteRebirth = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Event"):WaitForChild("Eco"):WaitForChild("[C-S]PlayerTryRebirth")
+local RemoteOnlineReward = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Function"):WaitForChild("GameRun"):WaitForChild("[C-S]TryGetOnlineReward")
+local RemoteUserSpin = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Function"):WaitForChild("Spin"):WaitForChild("[C-S]PlayerTryUserSpin")
+
+-- ==================== FLAGS ====================
+local AutoTrophyEnabled = false
+local AutoTrainEnabled = false
+local AutoRebirthEnabled = false
+local EggFlags = {}
+
+-- ==================== AUTO ACTIONS TAB ====================
+local Tab = Window:CreateTab("Auto Actions")
+
+-- Auto Trophy
+Tab:CreateToggle({
+    Name = "Auto Trophy (0.2s)",
+    CurrentValue = false,
+    Flag = "AutoTrophyToggle",
+    Callback = function(Value) AutoTrophyEnabled = Value end
+})
+
+-- Auto Train
+Tab:CreateToggle({
+    Name = "Auto Train (0.1s)",
+    CurrentValue = false,
+    Flag = "AutoTrainToggle",
+    Callback = function(Value) AutoTrainEnabled = Value end
+})
+
+-- Auto Rebirth
+Tab:CreateToggle({
+    Name = "Auto Rebirth (5s)",
+    CurrentValue = false,
+    Flag = "AutoRebirthToggle",
+    Callback = function(Value) AutoRebirthEnabled = Value end
+})
+
+-- Auto Hatch Section
+Tab:CreateSection("Auto Hatch")
+
+local eggs = {
+    {name = "Basic Egg", args = {1, "Egg1", {}}, interval = 0},
+    {name = "Superior Egg", args = {1, "Egg2", {}}, interval = 0},
+    {name = "Elli Egg", args = {1, "Egg3", {}}, interval = 0},
+    {name = "King Egg", args = {1, "Egg4", {}}, interval = 0},
+    {name = "4M Egg", args = {1, "4MEgg", {}}, interval = 5}
+}
+
+for _, egg in pairs(eggs) do
+    EggFlags[egg.name] = false
+    Tab:CreateToggle({
+        Name = egg.name,
+        CurrentValue = false,
+        Flag = egg.name.."Toggle",
+        Callback = function(Value)
+            EggFlags[egg.name] = Value
+        end
+    })
+end
+
+-- ==================== AUTO FIRST TAB ====================
+local AutoFirstTab = Window:CreateTab("Auto First")
+
+-- Tutorial message
+AutoFirstTab:CreateLabel("Tutorial: Type in the infinite yield: loopgoto [targetuser]")
+
+-- Infinite Yield button
+AutoFirstTab:CreateButton({
+    Name = "Infinite Yield",
+    Callback = function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+    end
+})
+
+-- ==================== LOOPS ====================
+
+-- Auto Trophy loop
+spawn(function()
+    while true do
+        if AutoTrophyEnabled then RemoteTrophy:FireServer() end
+        wait(0.2)
+    end
+end)
+
+-- Auto Train loop
+spawn(function()
+    while true do
+        if AutoTrainEnabled then RemoteTrain:FireServer() end
+        wait(0.1)
+    end
+end)
+
+-- Auto Rebirth loop
+spawn(function()
+    while true do
+        if AutoRebirthEnabled then RemoteRebirth:FireServer() end
+        wait(5)
+    end
+end)
+
+-- Auto Hatch loop
+spawn(function()
+    while true do
+        for _, egg in pairs(eggs) do
+            if EggFlags[egg.name] then
+                RemoteEgg:FireServer(unpack(egg.args))
+                if egg.interval > 0 then wait(egg.interval) end
+            end
+        end
+        wait(0.1)
+    end
+end)
+
+-- Ensure LocalPlayer.Character exists
+if not LocalPlayer.Character or not LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+    LocalPlayer.CharacterAdded:Wait()
+end
